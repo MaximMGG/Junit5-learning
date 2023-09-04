@@ -21,7 +21,7 @@ public class UserServiceTest {
     private static final User PETR = User.of(2, "Petr", "321");
 
     @BeforeAll
-    void init() {
+    static void init() {
         System.out.println("Before all: ");
     }
 
@@ -64,7 +64,7 @@ public class UserServiceTest {
     }
 
     @AfterAll
-    void close() {
+    static void close() {
         System.out.println("After all: ");
 
     }
