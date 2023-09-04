@@ -58,6 +58,22 @@ public class UserServiceTest {
         maybeUser.ifPresent(user -> assertEquals(IVAN, user));
     }
 
+    @Test
+    void loginFailIfPasswordNotCorrect() {
+        userService.add(IVAN);
+        Optional<User> maybeUser = userService.login(IVAN.getName(), "Hello");
+
+        assertTrue(maybeUser.isEmpty());
+    }
+
+    @Test
+    void loginFailIfUserDoesNotExist() {
+        userService.add(IVAN);
+        Optional<User> maybeUser = userService.login("Kolya", IVAN.getPassword());
+
+        assertTrue(maybeUser.isEmpty());
+    }
+
     @AfterEach
     void delteFrom() {
         System.out.println("After each: " + this);
