@@ -3,6 +3,7 @@ package com.maxim.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -12,10 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import com.maxim.dto.User;
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class UserServiceTest {
 
     private UserService userService;
+    private static final User IVAN = User.of(1, "Ivan", "123");
+    private static final User PETR = User.of(2, "Petr", "321");
 
     @BeforeAll
     void init() {
@@ -38,12 +41,21 @@ public class UserServiceTest {
     @Test
     void usersSizeIfUserAdded() {
         System.out.println("Test 2: " + this);
-        userService.add(new User());
-        userService.add(new User());
+        userService.add(IVAN);
+        userService.add(PETR);
 
         List<User> users = userService.getAll();
 
         assertEquals(2, users.size());
+    }
+
+    @Test
+    void loginSuccessIfUserExists() {
+        userService.add(IVAN);
+        Optional<User> maybeUser = userService.login(IVAN.getName(), IVAN.getPassword());
+
+        assertTrue(maybeUser.isPresent());
+        maybeUser.ifPresent(user -> assertEquals(IVAN, user));
     }
 
     @AfterEach
