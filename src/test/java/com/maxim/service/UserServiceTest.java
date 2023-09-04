@@ -13,12 +13,12 @@ import org.junit.jupiter.api.TestInstance;
 
 import com.maxim.dto.User;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class UserServiceTest {
+public class UserServiceTest {
 
     private UserService userService;
 
     @BeforeAll
-    static void init() {
+    void init() {
         System.out.println("Before all: ");
     }
 
@@ -52,7 +52,7 @@ class UserServiceTest {
     }
 
     @AfterAll
-    static void close() {
+    void close() {
         System.out.println("After all: ");
 
     }
