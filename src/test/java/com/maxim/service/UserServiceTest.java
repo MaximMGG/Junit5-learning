@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,6 +19,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.maxim.dto.User;
 import com.maxim.paramresolver.UserServiceParamResolver;
@@ -138,5 +142,38 @@ public class UserServiceTest {
                     },
                     () -> assertThrows(IllegalArgumentException.class, () -> userService.login("Petr", null)));
         }
+
+        @ParameterizedTest(name = "{arguments} test")
+        // @ArgumentsSource()
+        // @NullSource
+        // @EmptySource
+        // @ValueSource(strings = {
+        //     "Ivan", "Petr"
+        // })
+        // @NullAndEmptySource
+        @MethodSource("com.maxim.service.UserServiceTest#getArgumentsForLoginTest")
+        // @CsvFileSource(resources = "/login-test-data.csv", delimiter = ',', numLinesToSkip = 1)
+        // @CsvSource({
+        //     "Ivan,123",
+        //     "Petr,321"
+        // })
+        @DisplayName("login param test")
+        void loginParametrizedTest(String username, String password, Optional<User> user) {
+
+            userService.add(IVAN, PETR);
+
+            Optional<User> maybeUser = userService.login(username, password);
+            assertThat(maybeUser).isEqualTo(user);
+
+        }
+
+    }
+    static Stream<Arguments> getArgumentsForLoginTest() {
+        return Stream.of(
+            Arguments.of("Ivan", "123", Optional.of(IVAN)),
+            Arguments.of("Petr", "321", Optional.of(PETR)),
+            Arguments.of("Petr", "21", Optional.empty()),
+            Arguments.of("eeer", "321", Optional.empty())
+        );
     }
 }
