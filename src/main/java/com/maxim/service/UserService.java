@@ -8,15 +8,27 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.maxim.dao.UserDao;
 import com.maxim.dto.User;
 
 public class UserService {
     
     private final List<User> users = new ArrayList<>();
+    private final UserDao userDao;
+
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public boolean delete(Integer userId) {
+       return userDao.delete(userId);
+    }
+
 
     public List<User> getAll() {
         return users;
     }
+
 
     public void add(User... users) {
         this.users.addAll(Arrays.asList(users));

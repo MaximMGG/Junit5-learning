@@ -29,12 +29,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mockito;
 
 import com.maxim.TestBase;
+import com.maxim.dao.UserDao;
 import com.maxim.dto.User;
 import com.maxim.extension.ConditionalExtension;
 import com.maxim.extension.GlobalExtension;
-import com.maxim.extension.ThhrowableExtentsion;
 import com.maxim.extension.UserServiceParamResolver;
 @Tag("fast")
 @Tag("user")
@@ -43,12 +44,13 @@ import com.maxim.extension.UserServiceParamResolver;
     GlobalExtension.class,
     UserServiceParamResolver.class,
     ConditionalExtension.class,
-    ThhrowableExtentsion.class
+    // ThhrowableExtentsion.class
     // PostProcessingExtension.class
 })
 public class UserServiceTest extends TestBase {
 
     private UserService userService;
+    private UserDao userDao;
 
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETR = User.of(2, "Petr", "321");
@@ -63,9 +65,19 @@ public class UserServiceTest extends TestBase {
     }
 
     @BeforeEach
-    void prepare(UserService userService) {
+    void prepare() {
         System.out.println("Before each: " + this);
-        this.userService = userService;
+        this.userDao = Mockito.mock(UserDao.class);
+        this.userService = new UserService(userDao);
+    }
+
+    @Test
+    void shouldDeleteExistedUser() {
+        userService.add(IVAN);
+        Mockito.doReturn(true).when(userDao).delete(IVAN.getId());
+        // Mockito.doReturn(true).when(userDao).delete(Mockito.anyInt());
+        boolean delete = userService.delete(IVAN.getId());
+        assertThat(delete).isTrue();
     }
     
     @Test
