@@ -3,6 +3,7 @@ package com.maxim.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +30,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.maxim.TestBase;
 import com.maxim.dto.User;
-import com.maxim.paramresolver.UserServiceParamResolver;
+import com.maxim.extension.ConditionalExtension;
+import com.maxim.extension.GlobalExtension;
+import com.maxim.extension.ThhrowableExtentsion;
+import com.maxim.extension.UserServiceParamResolver;
 @Tag("fast")
 @Tag("user")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith({
-    UserServiceParamResolver.class
+    GlobalExtension.class,
+    UserServiceParamResolver.class,
+    ConditionalExtension.class,
+    ThhrowableExtentsion.class
+    // PostProcessingExtension.class
 })
-public class UserServiceTest {
+public class UserServiceTest extends TestBase {
 
     private UserService userService;
 
@@ -60,7 +69,10 @@ public class UserServiceTest {
     }
     
     @Test
-    void usersEmptyIfNoUserAdded() {
+    void usersEmptyIfNoUserAdded() throws IOException {
+        if (true) {
+            throw new RuntimeException();
+        }
         System.out.println("Test 1: " + this);
         List<User> allUsers = userService.getAll();
         // MatcherAssert.assertThat(allUsers, IsEmptyCollection.empty());
@@ -112,7 +124,6 @@ public class UserServiceTest {
     class Login {
 
         @Test
-        @Disabled("flaky, need to see")
         void loginFailIfPasswordNotCorrect() {
             userService.add(IVAN);
             Optional<User> maybeUser = userService.login(IVAN.getName(), "Hello");
@@ -131,6 +142,7 @@ public class UserServiceTest {
 
         @Test
         @Timeout(value = 200, unit = TimeUnit.MILLISECONDS)
+        @Disabled
         void checkLoginFunctionalityPerformance() {
             System.out.println(Thread.currentThread().getName());
             Optional<User> result = assertTimeoutPreemptively(Duration.ofMillis(200), () -> {

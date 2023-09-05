@@ -1,4 +1,4 @@
-package com.maxim.paramresolver;
+package com.maxim.extension;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;

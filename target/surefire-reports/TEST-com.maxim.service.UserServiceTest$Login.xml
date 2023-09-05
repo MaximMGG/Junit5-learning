@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.maxim.service.UserServiceTest" time="0.31" tests="0" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.maxim.service.UserServiceTest$Login" time="0.149" tests="16" errors="0" skipped="1" failures="0">
   <properties>
     <property name="java.specification.version" value="19"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -58,4 +58,137 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="63.0"/>
   </properties>
+  <testcase name="usersSizeIfUserAdded" classname="com.maxim.service.UserServiceTest" time="0.1">
+    <system-out><![CDATA[Hello from condition evaluation result
+
+post processing extension
+Bofore all callback
+Before all: 
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+Test 2: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="usersConvertedToMapById" classname="com.maxim.service.UserServiceTest" time="0.015">
+    <system-out><![CDATA[Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="usersEmptyIfNoUserAdded" classname="com.maxim.service.UserServiceTest" time="0.003">
+    <system-out><![CDATA[Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+Test 1: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginParametrizedTest(String, String, Optional)[1]" classname="com.maxim.service.UserServiceTest$Login" time="0.035">
+    <system-out><![CDATA[Hello from condition evaluation result
+Bofore all callback
+Hello from condition evaluation result
+post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginParametrizedTest(String, String, Optional)[2]" classname="com.maxim.service.UserServiceTest$Login" time="0.003">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginParametrizedTest(String, String, Optional)[3]" classname="com.maxim.service.UserServiceTest$Login" time="0.002">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginParametrizedTest(String, String, Optional)[4]" classname="com.maxim.service.UserServiceTest$Login" time="0.002">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginSuccessIfUserExists" classname="com.maxim.service.UserServiceTest$Login" time="0.005">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="checkLoginFunctionalityPerformance" classname="com.maxim.service.UserServiceTest$Login" time="0.0">
+    <skipped message="void com.maxim.service.UserServiceTest$Login.checkLoginFunctionalityPerformance() is @Disabled"/>
+    <system-out><![CDATA[post processing extension
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfPasswordNotCorrect" classname="com.maxim.service.UserServiceTest$Login" time="0.002">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="throwExceptionIfUserNameOrPasswordIsNull" classname="com.maxim.service.UserServiceTest$Login" time="0.008">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfUserDoesNotExist(RepetitionInfo)[1]" classname="com.maxim.service.UserServiceTest$Login" time="0.004">
+    <system-out><![CDATA[Hello from condition evaluation result
+post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfUserDoesNotExist(RepetitionInfo)[2]" classname="com.maxim.service.UserServiceTest$Login" time="0.003">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfUserDoesNotExist(RepetitionInfo)[3]" classname="com.maxim.service.UserServiceTest$Login" time="0.002">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfUserDoesNotExist(RepetitionInfo)[4]" classname="com.maxim.service.UserServiceTest$Login" time="0.003">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
+  <testcase name="loginFailIfUserDoesNotExist(RepetitionInfo)[5]" classname="com.maxim.service.UserServiceTest$Login" time="0.001">
+    <system-out><![CDATA[post processing extension
+Hello from condition evaluation result
+Before each: com.maxim.service.UserServiceTest@74f0ea28
+after test execution
+After each: com.maxim.service.UserServiceTest@74f0ea28
+]]></system-out>
+  </testcase>
 </testsuite>

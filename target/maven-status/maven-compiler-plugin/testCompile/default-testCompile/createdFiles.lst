@@ -1,1 +1,7 @@
 com\maxim\service\UserServiceTest.class
+com\maxim\service\UserServiceTest$Login.class
+com\maxim\extension\ConditionalExtension.class
+com\maxim\extension\PostProcessingExtension.class
+com\maxim\extension\UserServiceParamResolver.class
+com\maxim\extension\GlobalExtension.class
+com\maxim\TestBase.class
