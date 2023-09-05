@@ -15,27 +15,38 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.maxim.dto.User;
+import com.maxim.paramresolver.UserServiceParamResolver;
 @Tag("fast")
 @Tag("user")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith({
+    UserServiceParamResolver.class
+})
 public class UserServiceTest {
 
     private UserService userService;
+
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETR = User.of(2, "Petr", "321");
 
+    UserServiceTest(TestInfo testInfo) {
+        System.out.println();
+
+    }
     @BeforeAll
     static void init() {
         System.out.println("Before all: ");
     }
 
     @BeforeEach
-    void prepare() {
+    void prepare(UserService userService) {
         System.out.println("Before each: " + this);
-        userService = new UserService();
+        this.userService = userService;
     }
     
     @Test
