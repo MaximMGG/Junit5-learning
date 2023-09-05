@@ -11,10 +11,13 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import com.maxim.dto.User;
+@Tag("fast")
+@Tag("user")
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class UserServiceTest {
 
@@ -54,6 +57,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @Tag("login")
     void loginSuccessIfUserExists() {
         userService.add(IVAN);
         Optional<User> maybeUser = userService.login(IVAN.getName(), IVAN.getPassword());
@@ -65,6 +69,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @Tag("login")
     void throwExceptionIfUserNameOrPasswordIsNull() {
         assertAll(
             () -> {
@@ -90,6 +95,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @Tag("login")
     void loginFailIfPasswordNotCorrect() {
         userService.add(IVAN);
         Optional<User> maybeUser = userService.login(IVAN.getName(), "Hello");
@@ -98,6 +104,7 @@ public class UserServiceTest {
     }
 
     @Test
+    @Tag("login")
     void loginFailIfUserDoesNotExist() {
         userService.add(IVAN);
         Optional<User> maybeUser = userService.login("Kolya", IVAN.getPassword());
