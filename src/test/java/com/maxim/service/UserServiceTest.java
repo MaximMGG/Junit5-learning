@@ -2,6 +2,7 @@ package com.maxim.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
@@ -30,7 +30,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.maxim.TestBase;
 import com.maxim.dao.UserDao;
@@ -40,18 +44,23 @@ import com.maxim.extension.GlobalExtension;
 import com.maxim.extension.UserServiceParamResolver;
 @Tag("fast")
 @Tag("user")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 @ExtendWith({
     GlobalExtension.class,
     UserServiceParamResolver.class,
     ConditionalExtension.class,
+    MockitoExtension.class
     // ThhrowableExtentsion.class
     // PostProcessingExtension.class
 })
 public class UserServiceTest extends TestBase {
 
-    private UserService userService;
+    @Captor
+    private ArgumentCaptor<Integer> argumentCaptor;
+    @Mock
     private UserDao userDao;
+    @InjectMocks
+    private UserService userService;
 
     private static final User IVAN = User.of(1, "Ivan", "123");
     private static final User PETR = User.of(2, "Petr", "321");
@@ -68,8 +77,11 @@ public class UserServiceTest extends TestBase {
     @BeforeEach
     void prepare() {
         System.out.println("Before each: " + this);
-        this.userDao = Mockito.spy(new UserDao());
-        this.userService = new UserService(userDao);
+        // lenient().when(userDao.delete(IVAN.getId())).thenReturn(true);
+        // Mockito.doReturn(true).when(userDao).delete(IVAN.getId());
+        // Mockito.mock(UserDao.class, withSettings().lenient());
+        // this.userDao = Mockito.spy(new UserDao());
+        // this.userService = new UserService(userDao);
     }
 
     @Test
@@ -83,19 +95,25 @@ public class UserServiceTest extends TestBase {
         System.out.println(userService.delete(IVAN.getId()));
         System.out.println(userService.delete(IVAN.getId()));
 
-        ArgumentCaptor<Integer> forClass = ArgumentCaptor.forClass(Integer.class);
-        Mockito.verify(userDao, Mockito.times(3)).delete(forClass.capture());
+        // ArgumentCaptor<Integer> forClass = ArgumentCaptor.forClass(Integer.class);
+        Mockito.verify(userDao, Mockito.times(3)).delete(argumentCaptor.capture());
 
-        assertThat(forClass.getValue()).isEqualTo(1);
+        assertThat(argumentCaptor.getValue()).isEqualTo(1);
 
         assertThat(delete).isTrue();
+    }
+
+    @Test
+    void throwExceptionIfDatabaseIsNotAvailable() {
+        doThrow(RuntimeException.class).when(userDao).delete(IVAN.getId());
+        assertThrows(RuntimeException.class, () -> userService.delete(IVAN.getId()));
     }
     
     @Test
     void usersEmptyIfNoUserAdded() throws IOException {
-        if (true) {
-            throw new RuntimeException();
-        }
+        // if (true) {
+        //     throw new RuntimeException();
+        // }
         System.out.println("Test 1: " + this);
         List<User> allUsers = userService.getAll();
         // MatcherAssert.assertThat(allUsers, IsEmptyCollection.empty());
@@ -165,12 +183,11 @@ public class UserServiceTest extends TestBase {
 
         @Test
         @Timeout(value = 200, unit = TimeUnit.MILLISECONDS)
-        @Disabled
         void checkLoginFunctionalityPerformance() {
             System.out.println(Thread.currentThread().getName());
             Optional<User> result = assertTimeoutPreemptively(Duration.ofMillis(200), () -> {
                 System.out.println(Thread.currentThread().getName());
-                Thread.sleep(300);
+                Thread.sleep(100);
                 return userService.login("Kolya", IVAN.getPassword());
             });
         }
